@@ -1,0 +1,3 @@
+[submodule "modernAlert"]
+	path = modernAlert
+	url = git://github.com/5um17/modernAlert

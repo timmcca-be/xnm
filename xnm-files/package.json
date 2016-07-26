@@ -1,0 +1,18 @@
+{
+  "main": "index.html",
+  "name": "XNM - Xournal Note Manager",
+  "description": "Simple OneNote-like note management for Xournal",
+  "version": "0.1",
+  "keywords": [ "demo", "node-webkit" ],
+  "window": {
+    "title": "XNM - Xournal Note Manager",
+    /*"icon": "res/icon.png",*/
+    "toolbar": true,
+    "frame": true,
+    "width": 350,
+    "height": 800
+  },
+  "webkit": {
+    "plugin": true
+  }
+}

@@ -1,0 +1,90 @@
+* {
+    font-family: "Helvetica";
+}
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+html{
+    min-height: 100%;
+    position: relative;
+}
+body{
+    height: 100%;
+}
+.modernAlertWrapper {
+    width: 50%;
+}
+#container div {
+    margin-top: 50px;
+    position: absolute;
+    display: inline-block;
+    overflow: auto;
+    height: calc(100% - 50px);
+    width: 50%;
+}
+#books {
+    background: #e2f6e1;
+}
+#notes {
+    background-color: #edf7f7;
+    margin-left: 50%;
+}
+
+.text {
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    margin: 8px 0 8px 0;
+    color: darkgrey;
+}
+
+button {
+    border: none;
+    text-align: center;
+}
+.addButton {
+    position: absolute;
+    width: 50%;
+    height: 50px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+#newBook {
+    color: #1a7b15;
+    background-color: #7dcf78;
+}
+#newPage {
+    color: #0f5d5a;
+    background-color: #5b9d9a;
+    margin-left: 50%;
+}
+
+.book,
+.note,
+.delete {
+    margin-bottom: 1px;
+    height: 30px;
+}
+.book,
+.note {
+    width: calc(100% - 30px);
+}
+
+.book {
+    color: #1a7b15;
+    background-color: #bae9b8;
+}
+.book:disabled {
+    background-color: #f2fdf1;
+}
+.delete {
+    width: 30px;
+    background-color: #dd1111;
+}
+.note {
+    color: #0f5d5a;
+    background-color: #a5d1cf;
+}
