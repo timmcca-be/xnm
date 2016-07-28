@@ -17,6 +17,15 @@ else
     >&2 echo "Error: NW.js is not installed. Install it before proceeding."
 fi
 
+path="$(command -v xournal)"
+if [ "$path" != "" ]
+then
+    echo "Xournal is installed"
+else
+    err=1
+    >&2 echo "Error: Xournal is not installed. Install it before proceeding."
+fi
+
 if [ $err = 1 ]
 then
     exit
