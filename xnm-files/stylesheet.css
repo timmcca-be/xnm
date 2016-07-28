@@ -6,15 +6,16 @@ body {
     padding: 0;
     margin: 0;
 }
-html{
+html {
     min-height: 100%;
     position: relative;
+    background-color: #edf7f7;
 }
-body{
+body {
     height: 100%;
 }
 .modernAlertWrapper {
-    width: 50%;
+    width: 80%;
 }
 #container div {
     margin-top: 50px;
@@ -25,7 +26,7 @@ body{
     width: 50%;
 }
 #books {
-    background: #e2f6e1;
+    background-color: #e2f6e1;
 }
 #notes {
     background-color: #edf7f7;
@@ -46,7 +47,7 @@ button {
 }
 .addButton {
     position: absolute;
-    width: 50%;
+    width: calc(50% - 25px);
     height: 50px;
     text-decoration: none;
     display: inline-block;
@@ -56,10 +57,24 @@ button {
     color: #1a7b15;
     background-color: #7dcf78;
 }
+#settings {
+    color: dimgray;
+    background-color: #dddddd;
+    width: 50px;
+    margin-left: calc(50% - 25px);
+}
 #newPage {
     color: #0f5d5a;
     background-color: #5b9d9a;
-    margin-left: 50%;
+    margin-left: calc(50% + 25px);
+}
+
+.setting {
+    height: 40px;
+    width: 100%;
+    margin-bottom: 1px;
+    color: #0f5d5a;
+    background-color: #a5d1cf;
 }
 
 .book,
