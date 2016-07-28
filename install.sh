@@ -32,6 +32,18 @@ fi
 cp -r xnm-files "$path/"
 chmod -R a+r "$path/xnm-files"
 cp modernAlert/modernAlert.min.js "$path/xnm-files"
+
 echo "#!/bin/bash" > "$path/xnm"
 echo "nw '$path/xnm-files'" >> "$path/xnm"
 chmod a+x "$path/xnm"
+
+desktop=~/.local/share/applications/xnm.desktop
+if [ "$(whoami)" = "root" ]
+then
+    desktop=/usr/share/applications/xnm.desktop
+fi
+
+cp xnm.desktop $desktop
+
+echo "To uninstall this program, run:"
+echo "rm -r $desktop $path/xnm $path/xnm-files"

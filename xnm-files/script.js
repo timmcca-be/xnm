@@ -2,6 +2,8 @@ var exec;
 var active;
 
 $(document).ready(function(){
+    window.resizeTo(350, window.screen.availHeight);
+    window.moveTo(window.screen.availWidth - 350, 0);
     modernAlert({
         titleBackgroundColor : "#2e7e79"
     });
