@@ -29,7 +29,6 @@ body {
     background-color: #e2f6e1;
 }
 #notes {
-    background-color: #edf7f7;
     margin-left: 50%;
 }
 
@@ -47,13 +46,13 @@ button {
 }
 .addButton {
     position: absolute;
-    width: calc(50% - 25px);
     height: 50px;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
 }
 #newBook {
+    width: calc(50% - 25px);
     color: #1a7b15;
     background-color: #7dcf78;
 }
@@ -64,9 +63,16 @@ button {
     margin-left: calc(50% - 25px);
 }
 #newPage {
+    width: calc(25% - 12px);
     color: #0f5d5a;
     background-color: #5b9d9a;
     margin-left: calc(50% + 25px);
+}
+#import {
+    width: calc(25% - 13px);
+    color: #edf7f7;
+    background-color: #2e7c79;
+    margin-left: calc(75% + 13px);
 }
 
 .setting {

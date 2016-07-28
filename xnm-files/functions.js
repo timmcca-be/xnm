@@ -57,7 +57,66 @@ function openBook(book) {
     getNotes();
 }
 
-
+function addNote() {
+    if(active == undefined) {
+        alert("Select a notebook first.");
+        alertFocus();
+        return 1;
+    }
+    window.prompt("Note name:", "Note Name", function(name) {
+        name = strip(name);
+        var path = "~/.xnm/" + active + "/" + name + ".xoj";
+        exec("ls " + path, function(error, stdout, stderr) {
+            if(stdout == "") {
+                exec("cp ~/.config/xnm/blank.xoj " + path, function(error, stdout, stderr) {
+                    if(stderr != "") {
+                        alert(stderr);
+                        alertFocus();
+                    }
+                    getNotes();
+                    openNote(name + ".xoj");
+                });
+            } else {
+                alert("A note with the name " + name + ".xoj already exists in this notebook.");
+                alertFocus();
+            }
+        });
+    });
+    promptFocus();
+}
+function impert() {
+    if(active == undefined) {
+        alert("Select a notebook first.");
+        alertFocus();
+        return 1;
+    }
+    window.prompt("Path:", "Path", function(path) {
+        var array = path.split("/");
+        var name = strip(array[array.length - 1]);
+        try {
+            fs.accessSync("~/.xnm/" + active + "/" + name, fs.F_OK);
+            alert("A note with this name already exists");
+            alertFocus();
+            return 2;
+        } catch (e) {}
+        exec("ls " + path, function(error, stdout, stderr) {
+            if(stdout == "") {
+                exec("cp " + path + " ~/.xnm/" + active + "/" + name, function(error, stdout, stderr) {
+                    if(stderr != "") {
+                        alert(stderr);
+                        alertFocus();
+                    }
+                    getNotes();
+                    openNote(name);
+                });
+            } else {
+                alert("A note with the name " + name + " already exists in this notebook.");
+                alertFocus();
+            }
+        });
+    });
+    promptFocus();
+}
 function getNotes() {
     $("#notes").empty();
     if(active == undefined) {
@@ -76,33 +135,6 @@ function getNotes() {
             });
         }
     });
-}
-function addNote() {
-    if(active == undefined) {
-        alert("Select a notebook first.");
-        alertFocus();
-        return 1;
-    }
-    window.prompt("Note name:", "Note Name", function(name) {
-        name = strip(name);
-        var path = "~/.xnm/" + active + "/" + name + ".xoj"
-        var fs = require('fs');
-        try {
-            fs.accessSync(path, fs.F_OK);
-            alert("A note with this name already exists");
-            alertFocus();
-            return 2;
-        } catch (e) {}
-        exec("cp ~/.config/xnm/blank.xoj " + path, function(error, stdout, stderr) {
-            if(stderr != "") {
-                alert(stderr);
-                alertFocus();
-            }
-            getNotes();
-        });
-        openNote(name + ".xoj");
-    });
-    promptFocus();
 }
 function openNote(name) {
     exec("xournal ~/.xnm/" + active + "/" + name);
@@ -128,25 +160,6 @@ function editTemplate() {
 }
 function resetTemplate() {
     exec("cp blank.xoj ~/.config/xnm/blank.xoj");
-}
-function impert() {
-    if(window.opener.active == undefined) {
-        alert("Please select a notebook in the main window first.");
-        alertFocus();
-        return 1
-    }
-    window.prompt("Path:", "Path", function(path) {
-        var array = path.split("/");
-        var name = strip(array[array.length - 1]);
-        exec("cp " + path + " ~/.xnm/" + window.opener.active + "/" + name, function(error, stdout, stderr) {
-            if(stderr != "") {
-                alert(stderr);
-                alertFocus();
-            }
-            window.opener.getNotes();
-        });
-    });
-    promptFocus();
 }
 
 function promptFocus() {
