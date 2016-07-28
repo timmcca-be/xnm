@@ -39,7 +39,6 @@ then
 fi
 
 cp -r xnm-files "$path/"
-chmod -R a+r "$path/xnm-files"
 cp modernAlert/modernAlert.min.js "$path/xnm-files"
 
 echo "#!/bin/bash" > "$path/xnm"
