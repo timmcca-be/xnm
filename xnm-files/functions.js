@@ -28,7 +28,7 @@ function getBooks() {
         if(books[0] == undefined) {
             $("#books").append("<p class='text'>No notebooks</p>")
         } else {
-            books.forEach(function(element, index, array) {
+            books.forEach(function(element) {
                 $("#books").append("<button class='book' id='book-" + element + "' onclick=\"openBook('" + element + "')\">" + element + "</button>");
                 $("#books").append("<button class='delete' onclick=\"removeBook('" + element + "')\">-</button>");
             });
@@ -74,10 +74,10 @@ function addNote() {
                         alertFocus();
                     }
                     getNotes();
-                    openNote(name + ".xoj");
+                    openNote(name);
                 });
             } else {
-                alert("A note with the name " + name + ".xoj already exists in this notebook.");
+                alert("A note with the name " + name + " already exists in this notebook.");
                 alertFocus();
             }
         });
@@ -93,21 +93,34 @@ function impert() {
     window.prompt("Path:", "Path", function(path) {
         var array = path.split("/");
         var name = strip(array[array.length - 1]);
+        var ext = name.substring(name.length - 4, name.length)
+        name = name.substring(0, name.length - 4);
         try {
-            fs.accessSync("~/.xnm/" + active + "/" + name, fs.F_OK);
+            fs.accessSync("~/.xnm/" + active + "/" + name + ".xoj", fs.F_OK);
             alert("A note with this name already exists");
             alertFocus();
             return 2;
         } catch (e) {}
-        exec("ls " + path, function(error, stdout, stderr) {
+        exec("ls ~/.xnm" + active + "/" + name + ".xoj", function(error, stdout, stderr) {
             if(stdout == "") {
-                exec("cp " + path + " ~/.xnm/" + active + "/" + name, function(error, stdout, stderr) {
+                var cmd = "cp " + path + " ~/.xnm/" + active + "/" + name;
+                if(ext == ".xoj") {
+                    cmd += ".xoj";
+                }
+                exec(cmd, function(error, stdout, stderr) {
                     if(stderr != "") {
                         alert(stderr);
                         alertFocus();
                     }
-                    getNotes();
-                    openNote(name);
+                    if(ext != ".xoj") {
+                        cmd = "xournal ~/.xnm/" + active + "/" + name + " & sleep 0.5 && xdotool windowfocus $(xdotool search --pid $(ps ux | grep \"xournal $(echo ~)/.xnm/" + active + "/" + name + "\" | awk -v RS=[0-9]+ '{print RT+0;exit}') | sed '2q;d') && xdotool key ctrl+s && xdotool key KP_Enter && rm ~/.xnm/" + active + "/" + name;
+                        exec(cmd, function() {
+                            getNotes();
+                        });
+                    } else {
+                        getNotes();
+                        openNote(name);
+                    }
                 });
             } else {
                 alert("A note with the name " + name + " already exists in this notebook.");
@@ -129,7 +142,8 @@ function getNotes() {
         if(notes[0] == undefined) {
             $("#notes").append("<p class='text'>Empty notebook</p>")
         } else {
-            notes.forEach(function(element, index, array) {
+            notes.forEach(function(element) {
+                element = element.substring(0, element.length - 4);
                 $("#notes").append("<button class='note' onclick=\"openNote('" + element + "')\">" + element + "</button>");
                 $("#notes").append("<button class='delete' onclick=\"removeNote('" + element + "')\">-</button>");
             });
@@ -137,14 +151,14 @@ function getNotes() {
     });
 }
 function openNote(name) {
-    exec("xournal ~/.xnm/" + active + "/" + name);
+    exec("xournal ~/.xnm/" + active + "/" + name + ".xoj");
 }
 function removeNote(name) {
     confirm("Are you sure you want to delete the " + name + " note from the " + active + " notebook? This cannot be undone.", "Confirm Delete", function(boo) {
         if(!boo) {
             return 0;
         }
-        exec("rm ~/.xnm/" + active + "/" + name, function(error, stdout, stderr) {
+        exec("rm ~/.xnm/" + active + "/" + name + ".xoj", function(error, stdout, stderr) {
             if(stderr != "") {
                 alert(stderr);
                 alertFocus();

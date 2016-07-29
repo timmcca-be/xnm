@@ -17,6 +17,15 @@ else
     >&2 echo "Error: NW.js is not installed. Install it before proceeding."
 fi
 
+path="$(command -v xdotool)"
+if [ "$path" != "" ]
+then
+    echo "xdotool is installed"
+else
+    err=1
+    >&2 echo "Error: xdotool is not installed. Install it before proceeding."
+fi
+
 path="$(command -v xournal)"
 if [ "$path" != "" ]
 then
