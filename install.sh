@@ -53,6 +53,7 @@ cp modernAlert/modernAlert.min.js "$path/xnm-files"
 echo "#!/bin/bash" > "$path/xnm"
 echo "nw '$path/xnm-files'" >> "$path/xnm"
 chmod a+x "$path/xnm"
+chmod a+x "$path/xnm-files/import-bash.sh"
 
 desktop=~/.local/share/applications/xnm.desktop
 if [ "$(whoami)" = "root" ]

@@ -101,7 +101,7 @@ function impert() {
             alertFocus();
             return 2;
         } catch (e) {}
-        exec("ls ~/.xnm" + active + "/" + name + ".xoj", function(error, stdout, stderr) {
+        exec("ls ~/.xnm/" + active + "/" + name + ".xoj", function(error, stdout, stderr) {
             if(stdout == "") {
                 var cmd = "cp " + path + " ~/.xnm/" + active + "/" + name;
                 if(ext == ".xoj") {
@@ -113,8 +113,8 @@ function impert() {
                         alertFocus();
                     }
                     if(ext != ".xoj") {
-                        cmd = "xournal ~/.xnm/" + active + "/" + name + " & sleep 0.5 && xdotool windowfocus $(xdotool search --pid $(ps ux | grep \"xournal $(echo ~)/.xnm/" + active + "/" + name + "\" | awk -v RS=[0-9]+ '{print RT+0;exit}') | sed '2q;d') && xdotool key ctrl+s && xdotool key KP_Enter && rm ~/.xnm/" + active + "/" + name;
-                        exec(cmd, function() {
+                        exec("xournal ~/.xnm/" + active + "/" + name);
+                        exec("./import-bash.sh " + active + " " + name, function() {
                             getNotes();
                         });
                     } else {
@@ -143,9 +143,11 @@ function getNotes() {
             $("#notes").append("<p class='text'>Empty notebook</p>")
         } else {
             notes.forEach(function(element) {
-                element = element.substring(0, element.length - 4);
-                $("#notes").append("<button class='note' onclick=\"openNote('" + element + "')\">" + element + "</button>");
-                $("#notes").append("<button class='delete' onclick=\"removeNote('" + element + "')\">-</button>");
+                if(element.substring(element.length - 4, element.length) == ".xoj") {
+                    element = element.substring(0, element.length - 4);
+                    $("#notes").append("<button class='note' onclick=\"openNote('" + element + "')\">" + element + "</button>");
+                    $("#notes").append("<button class='delete' onclick=\"removeNote('" + element + "')\">-</button>");
+                }
             });
         }
     });
@@ -158,7 +160,7 @@ function removeNote(name) {
         if(!boo) {
             return 0;
         }
-        exec("rm ~/.xnm/" + active + "/" + name + ".xoj", function(error, stdout, stderr) {
+        exec("rm -f ~/.xnm/" + active + "/" + name + ".xoj ~/.xnm/" + active + "/" + name, function(error, stdout, stderr) {
             if(stderr != "") {
                 alert(stderr);
                 alertFocus();
