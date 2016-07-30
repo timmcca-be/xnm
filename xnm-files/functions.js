@@ -95,24 +95,20 @@ function impert() {
         var name = strip(array[array.length - 1]);
         var ext = name.substring(name.length - 4, name.length)
         name = name.substring(0, name.length - 4);
-        try {
-            fs.accessSync("~/.xnm/" + active + "/" + name + ".xoj", fs.F_OK);
-            alert("A note with this name already exists");
-            alertFocus();
-            return 2;
-        } catch (e) {}
-        exec("ls ~/.xnm/" + active + "/" + name + ".xoj", function(error, stdout, stderr) {
+        var cmd = "ls ~/.xnm/" + active + "/" + name;
+        if(ext != ".xoj") {
+            cmd += ext;
+        }
+        exec(cmd + ".xoj", function(error, stdout, stderr) {
             if(stdout == "") {
-                var cmd = "cp " + path + " ~/.xnm/" + active + "/" + name;
-                if(ext == ".xoj") {
-                    cmd += ".xoj";
-                }
+                cmd = "cp " + path + " ~/.xnm/" + active + "/" + name + ext;
                 exec(cmd, function(error, stdout, stderr) {
                     if(stderr != "") {
                         alert(stderr);
                         alertFocus();
                     }
                     if(ext != ".xoj") {
+                        name = name + ext;
                         exec("xournal ~/.xnm/" + active + "/" + name);
                         exec("./import-bash.sh " + active + " " + name, function() {
                             getNotes();

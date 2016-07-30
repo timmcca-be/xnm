@@ -6,4 +6,7 @@ done
 xdotool windowfocus $wind &&
 xdotool key ctrl+s &&
 xdotool key KP_Enter &&
-sleep 1
+wind=""
+while [ "$wind" = "" ]; do
+    wind="$(xdotool search --name "Xournal - $2.xoj")"
+done
