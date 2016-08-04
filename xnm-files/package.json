@@ -1,6 +1,6 @@
 {
   "main": "index.html",
-  "name": "XNM - Xournal Note Manager",
+  "name": "XNM",
   "description": "Simple OneNote-like note management for Xournal",
   "version": "0.1",
   "keywords": [ "demo", "node-webkit" ],
